@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#103c3c" />
+<title>NEVERA MARKET — Premium Marketplace</title>
+<style>
+:root{
+  --bg:#f5f7f6;--card:#fff;--ink:#163b3d;--muted:#718084;--line:#e4e9e8;
+  --brand:#123f40;--accent:#32c6c2;--accent2:#5a7bea;--danger:#e85d75;
+  --shadow:0 14px 45px rgba(18,63,64,.09);--radius:24px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+a{text-decoration:none;color:inherit}.hidden{display:none!important}
+.header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav{max-width:1250px;margin:auto;padding:16px 24px;display:flex;align-items:center;gap:24px}
+.logo{font-size:26px;font-weight:900;letter-spacing:-1px}.logo b{color:var(--accent)}
+.search{flex:1;display:flex;border:1px solid var(--line);background:#fff;border-radius:16px;overflow:hidden}
+.search input{flex:1;padding:15px;border:0;outline:0}.search button{padding:0 24px;background:var(--brand);color:#fff;font-weight:800}
+.nav-actions{display:flex;gap:10px}.icon-btn{width:46px;height:46px;border-radius:14px;background:#eef4f3;color:var(--brand);font-size:20px}
+.container{max-width:1250px;margin:auto;padding:28px 24px 110px}
+.hero{min-height:330px;border-radius:32px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:30px;color:white;background:
+ radial-gradient(circle at 85% 15%,rgba(50,198,194,.75),transparent 28%),
+ radial-gradient(circle at 10% 100%,rgba(90,123,234,.55),transparent 35%),var(--brand);box-shadow:var(--shadow)}
+.hero h1{font-size:clamp(38px,6vw,72px);line-height:.98;margin:0 0 18px;letter-spacing:-3px;max-width:720px}
+.hero p{font-size:18px;max-width:600px;color:#d7eeee;line-height:1.6}.cta{display:inline-flex;margin-top:15px;padding:16px 24px;background:var(--accent);color:#083334;border-radius:15px;font-weight:900}
+.hero-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:28px;padding:24px;min-width:250px;backdrop-filter:blur(12px)}.hero-card b{font-size:44px;display:block}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:42px 0 18px}.section-head h2{font-size:34px;margin:0;letter-spacing:-1px}
+.categories{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.cat{background:var(--card);padding:20px 12px;border:1px solid var(--line);border-radius:20px;text-align:center;font-weight:800;transition:.2s}.cat:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--accent)}.cat .emoji{font-size:34px;display:block;margin-bottom:8px}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}.filter{padding:12px 15px;border-radius:13px;border:1px solid var(--line);background:white;color:var(--ink)}.count{margin-left:auto;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.product{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.02);transition:.25s}.product:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.product img{width:100%;height:225px;object-fit:cover;background:#e9efef}.heart{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:50%;background:#fff;color:var(--brand);font-size:20px}.pbody{padding:18px}.pbody h3{margin:0 0 9px;font-size:21px}.price{font-size:24px;font-weight:900}.meta{color:var(--muted);margin:10px 0}.buy{width:100%;padding:13px;border-radius:13px;background:var(--brand);color:white;font-weight:800}
+.empty{grid-column:1/-1;text-align:center;padding:70px;background:#fff;border:1px dashed #cdd8d7;border-radius:24px;color:var(--muted)}
+.fab{position:fixed;right:24px;bottom:95px;z-index:19;background:var(--accent);color:#073637;width:62px;height:62px;border-radius:50%;font-size:30px;box-shadow:var(--shadow)}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:18;background:rgba(255,255,255,.96);border-top:1px solid var(--line);display:flex;justify-content:center;gap:30px;padding:13px;backdrop-filter:blur(12px)}.bottom button{background:none;color:var(--ink);font-weight:700}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(8,25,25,.55);display:grid;place-items:center;padding:20px}.panel{width:min(100%,900px);max-height:90vh;overflow:auto;background:#fff;border-radius:28px;padding:28px;box-shadow:0 30px 100px rgba(0,0,0,.25)}.close{float:right;background:#eef4f3;border-radius:12px;width:42px;height:42px;font-size:22px}.tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin:18px 0}.tab{padding:12px 14px;background:none;font-weight:800;color:var(--muted)}.tab.active{color:var(--brand);border-bottom:3px solid var(--accent)}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;outline:0}.field textarea{min-height:90px}.primary{padding:14px 20px;background:var(--brand);color:#fff;border-radius:13px;font-weight:900}.secondary{padding:14px 20px;background:#edf5f4;color:var(--brand);border-radius:13px;font-weight:900}.danger{background:#fff0f3;color:var(--danger)}
+.admin-products{margin-top:22px}.row{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--line)}.row img{width:58px;height:48px;object-fit:cover;border-radius:9px}.row .grow{flex:1}.row small{color:var(--muted)}
+.settings-box{background:#f5f8f8;border-radius:18px;padding:18px;margin:14px 0}.login{width:min(100%,420px)}
+.notice{padding:12px 15px;background:#eef9f8;border-radius:12px;color:#205a58;margin:12px 0;font-size:14px}.auth-switch{display:flex;gap:8px;margin:18px 0}.auth-switch button{flex:1;padding:12px;border-radius:12px;background:#edf5f4;color:var(--brand);font-weight:800}.social{width:100%;padding:14px;margin-top:10px;border:1px solid var(--line);background:#fff;border-radius:13px;font-weight:800}.message{padding:14px;border:1px solid var(--line);border-radius:14px;margin:10px 0}.avatar{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:var(--accent);font-size:25px;font-weight:900;color:var(--brand)}
+@media(max-width:850px){.nav{padding:12px 16px}.nav-actions{display:none}.container{padding:18px 16px 100px}.hero{padding:30px;min-height:280px}.hero-card{display:none}.categories{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.product img{height:165px}.pbody{padding:13px}.pbody h3{font-size:17px}.price{font-size:19px}.admin-grid{grid-template-columns:1fr}.bottom{gap:10px;font-size:12px}.section-head h2{font-size:28px}.logo{font-size:21px}}
+</style>
+</head>
+<body>
+<header class="header"><nav class="nav">
+  <a class="logo" href="#">NEVERA<span><b>•</b>MARKET</span></a>
+  <div class="search"><input id="search" placeholder="Nimani qidiryapsiz?"/><button onclick="renderProducts()">Qidirish</button></div>
+  <div class="nav-actions"><button class="icon-btn" onclick="showFavorites()">♡</button><button class="icon-btn" id="profileBtn" onclick="openProfile()">♙</button><button class="icon-btn" onclick="openAdmin()">☰</button></div>
+</nav></header>
+
+<main class="container">
+<section class="hero">
+ <div><div style="font-weight:900;color:var(--accent)">YANGI AVLOD MARKETPLACE</div><h1>Bozor emas.<br>Bu — NEVERA.</h1><p>Premium ko'rinish, tez qidiruv, mahsulot boshqaruvi, buyurtmalar, Telegram va Instagram integratsiyasi — barchasi bitta zamonaviy marketplace ichida.</p><a href="#products" class="cta">Mahsulotlarni ko'rish →</a></div>
+ <div class="hero-card"><b>150+</b><span>Demo mahsulot tizimi</span><hr style="border-color:rgba(255,255,255,.15)"><b>24/7</b><span>Admin boshqaruvi</span></div>
+</section>
+
+<div class="section-head"><h2>Kategoriyalar</h2></div>
+<section class="categories" id="categories"></section>
+
+<div class="section-head" id="products"><h2>Top e'lonlar</h2><button class="secondary" onclick="openSeller()">+ E'lon berish</button></div>
+<div class="toolbar"><select class="filter" id="categoryFilter" onchange="renderProducts()"><option value="">Barcha kategoriyalar</option></select><select class="filter" id="sort" onchange="renderProducts()"><option value="new">Yangilari</option><option value="low">Arzonidan</option><option value="high">Qimmatidan</option></select><span class="count" id="count"></span></div>
+<section class="grid" id="productGrid"></section>
+</main>
+
+<button class="fab" onclick="openSeller()">＋</button>
+<div class="bottom"><button onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂ Bosh sahifa</button><button onclick="showFavorites()">♡ Saqlangan</button><button onclick="openSeller()">⊕ E'lon berish</button><button onclick="openMessages()">◔ Chat</button><button onclick="openProfile()">♙ Profil</button></div>
+
+<div id="modal" class="modal hidden"><div class="panel" id="modalContent"></div></div>
+
+<script>
+const DEFAULT_PRODUCTS=[
+ {id:1,title:"Labo izotermik xoladelnik",price:112287150,category:"Transport",location:"Buxoro",date:"Bugun",image:"https://images.unsplash.com/photo-1551830820-330a71b99659?auto=format&fit=crop&w=900&q=80"},
+ {id:2,title:"Premium vitrinali xolodilnik",price:14500000,category:"Biznes",location:"Toshkent",date:"Bugun",image:"https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80"},
+ {id:3,title:"Gaming noutbuk RTX",price:9800000,category:"Elektronika",location:"Samarqand",date:"Kecha",image:"https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=900&q=80"},
+ {id:4,title:"Zamonaviy ofis mebeli",price:4200000,category:"Uy va bog'",location:"Buxoro",date:"Bugun",image:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"},
+ {id:5,title:"Professional kamera",price:7600000,category:"Elektronika",location:"Farg'ona",date:"2 kun oldin",image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80"},
+ {id:6,title:"Yangi kuchukcha",price:1500000,category:"Hayvonlar",location:"Navoiy",date:"Kecha",image:"https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=900&q=80"}
+];
+const CATS=[["🚗","Transport"],["💻","Elektronika"],["💼","Ish"],["🏠","Uy va bog'"],["🐾","Hayvonlar"],["🏢","Biznes"],["👕","Kiyim"],["✨","Boshqalar"]];
+let state={products:JSON.parse(localStorage.getItem("nevera_products")||"null")||DEFAULT_PRODUCTS,
+ settings:JSON.parse(localStorage.getItem("nevera_settings")||"null")||{brand:"NEVERA•MARKET",telegram:"https://t.me/your_username",instagram:"https://instagram.com/your_username",currency:"so'm"},
+ favorites:JSON.parse(localStorage.getItem("nevera_favorites")||"[]")};
+function save(){localStorage.setItem("nevera_products",JSON.stringify(state.products));localStorage.setItem("nevera_settings",JSON.stringify(state.settings));localStorage.setItem("nevera_favorites",JSON.stringify(state.favorites))}
+function money(n){return new Intl.NumberFormat("uz-UZ").format(n)+" "+state.settings.currency}
+function init(){
+ document.querySelector(".logo").innerHTML=state.settings.brand.replace("•","<b>•</b>");
+ const cats=document.getElementById("categories"), filter=document.getElementById("categoryFilter");
+ cats.innerHTML=CATS.map(c=>`<button class="cat" onclick="document.getElementById('categoryFilter').value='${c[1]}';renderProducts()"><span class="emoji">${c[0]}</span>${c[1]}</button>`).join("");
+ filter.innerHTML='<option value="">Barcha kategoriyalar</option>'+CATS.map(c=>`<option>${c[1]}</option>`).join("");
+ renderProducts();
+}
+function renderProducts(){
+ const q=document.getElementById("search").value.toLowerCase(),cat=document.getElementById("categoryFilter").value,sort=document.getElementById("sort").value;
+ let p=state.products.filter(x=>(!cat||x.category===cat)&&x.title.toLowerCase().includes(q));
+ if(sort==="low")p.sort((a,b)=>a.price-b.price);if(sort==="high")p.sort((a,b)=>b.price-a.price);
+ document.getElementById("count").textContent=p.length+" ta e'lon";
+ document.getElementById("productGrid").innerHTML=p.length?p.map(x=>`<article class="product"><img src="${x.image}" alt=""><button class="heart" onclick="toggleFav(${x.id})">${state.favorites.includes(x.id)?"♥":"♡"}</button><div class="pbody"><h3>${x.title}</h3><div class="price">${money(x.price)}</div><div class="meta">${x.location} • ${x.date}</div><button class="buy" onclick="order(${x.id})">Buyurtma berish</button></div></article>`).join(""):'<div class="empty">Hech narsa topilmadi.</div>';
+}
+function modal(html){document.getElementById("modalContent").innerHTML=`<button class="close" onclick="closeModal()">×</button>`+html;document.getElementById("modal").classList.remove("hidden")}
+function closeModal(){document.getElementById("modal").classList.add("hidden")}
+function toggleFav(id){state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];save();renderProducts()}
+function showFavorites(){let old=state.products;let f=old.filter(x=>state.favorites.includes(x.id));modal(`<h2>♡ Saqlangan e'lonlar</h2><div class="notice">${f.length?f.map(x=>x.title).join("<br>"):"Hali saqlangan e'lon yo'q."}</div>`)}
+function contact(type){let u=state.settings[type];if(!u||u.includes("your_username")){modal(`<h2>${type==="telegram"?"Telegram":"Instagram"} sozlanmagan</h2><p>Admin panel → Sozlamalar bo'limidan o'z havolangizni kiriting.</p>`)}else window.open(u,"_blank")}
+function order(id){let p=state.products.find(x=>x.id===id);let text=encodeURIComponent(`Salom! "${p.title}" mahsulotiga buyurtma bermoqchiman. Narxi: ${money(p.price)}`);let u=state.settings.telegram;if(u&& !u.includes("your_username")) window.open(u+(u.includes("?")?"&":"?")+"text="+text,"_blank"); else modal(`<h2>Buyurtma</h2><p><b>${p.title}</b> tanlandi.</p><div class="notice">Telegram manzilini Admin panel → Sozlamalar orqali kiriting. Shundan keyin buyurtmalar avtomatik Telegramga yo'naltiriladi.</div>`)}
+function openSeller(){modal(`<h2>Yangi e'lon joylash</h2><p class="notice">Demo versiya: e'lon darhol saytda paydo bo'ladi.</p><form onsubmit="addProduct(event)" class="admin-grid"><div class="field"><label>Nomi</label><input name="title" required></div><div class="field"><label>Narxi</label><input name="price" type="number" required></div><div class="field"><label>Kategoriya</label><select name="category">${CATS.map(c=>`<option>${c[1]}</option>`)}</select></div><div class="field"><label>Shahar</label><input name="location" value="Buxoro"></div><div class="field" style="grid-column:1/-1"><label>Rasm URL</label><input name="image" value="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80"></div><div><button class="primary">E'lonni joylash</button></div></form>`)}
+function addProduct(e){e.preventDefault();let f=new FormData(e.target);state.products.unshift({id:Date.now(),title:f.get("title"),price:+f.get("price"),category:f.get("category"),location:f.get("location"),date:"Hozirgina",image:f.get("image")});save();closeModal();renderProducts()}
+function openAdmin(){
+ modal(`<div class="login"><h2>NEVERA Admin Panel</h2><p>Butun marketplace boshqaruvi bir joyda.</p><div class="field"><label>Admin parol</label><input id="adminPass" type="password" placeholder="Parolni kiriting"></div><br><button class="primary" onclick="loginAdmin()">Kirish</button><p class="notice">Demo parol: <b>nevera2026</b> — keyin Sozlamalardan o'zgartirish mumkin.</p></div>`);
+}
+function loginAdmin(){if(document.getElementById("adminPass").value!=="nevera2026"){alert("Parol noto'g'ri");return}adminPanel()}
+function adminPanel(){
+ modal(`<h2>⚡ Admin boshqaruv markazi</h2><div class="tabs"><button class="tab active" onclick="adminPanel()">Dashboard</button><button class="tab" onclick="adminProducts()">Mahsulotlar</button><button class="tab" onclick="adminSettings()">Sozlamalar</button></div>
+ <div class="admin-grid"><div class="settings-box"><b>📦 ${state.products.length}</b><br>Jami e'lonlar</div><div class="settings-box"><b>♡ ${state.favorites.length}</b><br>Saqlanganlar</div><div class="settings-box"><b>💬 24/7</b><br>Telegram aloqa</div><div class="settings-box"><b>🎨 Premium</b><br>NEVERA dizayni</div></div><br><button class="primary" onclick="openSeller()">+ Yangi mahsulot</button>`);
+}
+function adminProducts(){modal(`<h2>Mahsulotlarni boshqarish</h2><div class="tabs"><button class="tab" onclick="adminPanel()">Dashboard</button><button class="tab active">Mahsulotlar</button><button class="tab" onclick="adminSettings()">Sozlamalar</button></div><div class="admin-products">${state.products.map(p=>`<div class="row"><img src="${p.image}"><div class="grow"><b>${p.title}</b><br><small>${money(p.price)}</small></div><button class="secondary" onclick="editProduct(${p.id})">✎</button><button class="secondary danger" onclick="deleteProduct(${p.id})">×</button></div>`).join("")}</div>`)}
+function deleteProduct(id){if(confirm("O'chirilsinmi?")){state.products=state.products.filter(x=>x.id!==id);save();adminProducts();renderProducts()}}
+function editProduct(id){let p=state.products.find(x=>x.id===id);modal(`<h2>E'lonni tahrirlash</h2><form onsubmit="updateProduct(event,${id})" class="admin-grid"><div class="field"><label>Nomi</label><input name="title" value="${p.title}" required></div><div class="field"><label>Narxi</label><input name="price" type="number" value="${p.price}" required></div><div class="field"><label>Kategoriya</label><select name="category">${CATS.map(c=>`<option ${p.category===c[1]?"selected":""}>${c[1]}</option>`)}</select></div><div class="field"><label>Shahar</label><input name="location" value="${p.location}"></div><div class="field" style="grid-column:1/-1"><label>Rasm URL</label><input name="image" value="${p.image}"></div><button class="primary">Saqlash</button></form>`)}
+function updateProduct(e,id){e.preventDefault();let f=new FormData(e.target),p=state.products.find(x=>x.id===id);Object.assign(p,{title:f.get("title"),price:+f.get("price"),category:f.get("category"),location:f.get("location"),image:f.get("image")});save();adminProducts();renderProducts()}
+function adminSettings(){modal(`<h2>⚙ Global sozlamalar</h2><div class="tabs"><button class="tab" onclick="adminPanel()">Dashboard</button><button class="tab" onclick="adminProducts()">Mahsulotlar</button><button class="tab active">Sozlamalar</button></div><form onsubmit="saveSettings(event)" class="admin-grid"><div class="field"><label>Market nomi</label><input name="brand" value="${state.settings.brand}"></div><div class="field"><label>Valyuta</label><input name="currency" value="${state.settings.currency}"></div><div class="field"><label>Telegram havolasi</label><input name="telegram" value="${state.settings.telegram}"></div><div class="field"><label>Instagram havolasi</label><input name="instagram" value="${state.settings.instagram}"></div><div style="grid-column:1/-1"><button class="primary">Barcha sozlamalarni saqlash</button> <button type="button" class="secondary" onclick="resetData()">Demo ma'lumotlarni tiklash</button></div></form>`)}
+function saveSettings(e){e.preventDefault();let f=new FormData(e.target);state.settings={brand:f.get("brand"),currency:f.get("currency"),telegram:f.get("telegram"),instagram:f.get("instagram")};save();init();adminSettings()}
+function resetData(){if(confirm("Barcha mahsulotlar demo holatiga qaytadi")){state.products=DEFAULT_PRODUCTS;state.favorites=[];save();init();adminPanel()}}
+
+// ===== NEVERA ACCOUNT SYSTEM (local demo version) =====
+let users = JSON.parse(localStorage.getItem("nevera_users") || "[]");
+let currentUser = JSON.parse(localStorage.getItem("nevera_current_user") || "null");
+let messages = JSON.parse(localStorage.getItem("nevera_messages") || "[]");
+
+function saveAccounts(){
+  localStorage.setItem("nevera_users", JSON.stringify(users));
+  localStorage.setItem("nevera_current_user", JSON.stringify(currentUser));
+  localStorage.setItem("nevera_messages", JSON.stringify(messages));
+}
+function requireLogin(action){
+  if(!currentUser){ openAuth(); return false; }
+  return true;
+}
+function openAuth(mode="login"){
+  modal(`<div class="login">
+    <h2>${mode==="login"?"NEVERA hisobiga kirish":"NEVERA hisob yaratish"}</h2>
+    <p>OLX uslubidagi shaxsiy hisob tizimi.</p>
+    <div class="auth-switch">
+      <button onclick="openAuth('login')">Kirish</button>
+      <button onclick="openAuth('register')">Ro'yxatdan o'tish</button>
+    </div>
+    ${mode==="login" ? `
+      <form onsubmit="loginUser(event)">
+        <div class="field"><label>Telefon yoki email</label><input name="identity" placeholder="+998 90 123 45 67 yoki email" required></div><br>
+        <div class="field"><label>Parol</label><input name="password" type="password" required></div><br>
+        <button class="primary" style="width:100%">Kirish</button>
+      </form>` : `
+      <form onsubmit="registerUser(event)">
+        <div class="field"><label>Ism</label><input name="name" required></div><br>
+        <div class="field"><label>Telefon raqam</label><input name="phone" placeholder="+998 90 123 45 67" required></div><br>
+        <div class="field"><label>Email</label><input name="email" type="email"></div><br>
+        <div class="field"><label>Parol</label><input name="password" type="password" minlength="4" required></div><br>
+        <button class="primary" style="width:100%">Hisob yaratish</button>
+      </form>`}
+    <button class="social" onclick="googleDemo()">ⓖ Google orqali davom etish</button>
+    <div class="notice">Hozir bu demo autentifikatsiya. Google va SMS tasdiqlashni haqiqiy ishlatish uchun Supabase/Firebase backend ulanadi.</div>
+  </div>`);
+}
+function registerUser(e){
+  e.preventDefault(); const f=new FormData(e.target);
+  const phone=f.get("phone").trim(), email=f.get("email").trim().toLowerCase();
+  if(users.some(u=>u.phone===phone || (email && u.email===email))){ alert("Bu telefon yoki email allaqachon ro'yxatdan o'tgan."); return; }
+  currentUser={id:Date.now(),name:f.get("name").trim(),phone,email,password:f.get("password"),joined:new Date().toLocaleDateString("uz-UZ")};
+  users.push(currentUser); saveAccounts(); closeModal(); renderProducts(); openProfile();
+}
+function loginUser(e){
+  e.preventDefault(); const f=new FormData(e.target), identity=f.get("identity").trim().toLowerCase(), password=f.get("password");
+  const u=users.find(x=>(x.phone===identity || (x.email||"").toLowerCase()===identity) && x.password===password);
+  if(!u){ alert("Telefon/email yoki parol noto'g'ri."); return; }
+  currentUser=u; saveAccounts(); closeModal(); renderProducts(); openProfile();
+}
+function googleDemo(){
+  modal(`<h2>Google orqali kirish</h2><div class="notice">Google login oynasi va xavfsiz autentifikatsiya frontend faylning o'zi bilan haqiqiy ishlamaydi. Buning uchun Supabase yoki Firebase loyihasi va Google OAuth sozlamalari kerak. Keyingi versiyada buni haqiqiy ulash mumkin.</div><button class="primary" onclick="openAuth('login')">Orqaga</button>`);
+}
+function openProfile(){
+  if(!currentUser){ openAuth(); return; }
+  const myAds=state.products.filter(p=>p.ownerId===currentUser.id);
+  modal(`<div style="display:flex;gap:16px;align-items:center"><div class="avatar">${currentUser.name.charAt(0).toUpperCase()}</div><div><h2 style="margin:0">${currentUser.name}</h2><small>${currentUser.phone}</small></div></div>
+    <div class="tabs">
+      <button class="tab active" onclick="openProfile()">Profil</button>
+      <button class="tab" onclick="openMyAds()">Mening e'lonlarim (${myAds.length})</button>
+      <button class="tab" onclick="showFavorites()">Saqlanganlar (${state.favorites.length})</button>
+      <button class="tab" onclick="openMessages()">Xabarlar</button>
+    </div>
+    <div class="settings-box"><b>📱 Telefon:</b> ${currentUser.phone}</div>
+    <div class="settings-box"><b>✉️ Email:</b> ${currentUser.email || "Kiritilmagan"}</div>
+    <div class="settings-box"><b>📅 Ro'yxatdan o'tgan:</b> ${currentUser.joined || "Bugun"}</div>
+    <button class="secondary danger" onclick="logoutUser()">Hisobdan chiqish</button>`);
+}
+function logoutUser(){ currentUser=null; saveAccounts(); closeModal(); renderProducts(); alert("Hisobdan chiqdingiz."); }
+function openMyAds(){
+  if(!requireLogin())return;
+  const ads=state.products.filter(p=>p.ownerId===currentUser.id);
+  modal(`<h2>Mening e'lonlarim</h2><div class="tabs"><button class="tab" onclick="openProfile()">Profil</button><button class="tab active">Mening e'lonlarim</button><button class="tab" onclick="showFavorites()">Saqlanganlar</button><button class="tab" onclick="openMessages()">Xabarlar</button></div>
+  ${ads.length ? ads.map(p=>`<div class="row"><img src="${p.image}"><div class="grow"><b>${p.title}</b><br><small>${money(p.price)} • ${p.location}</small></div><button class="secondary" onclick="editProduct(${p.id})">✎</button></div>`).join("") : `<div class="empty">Siz hali e'lon joylamagansiz.<br><br><button class="primary" onclick="openSeller()">Birinchi e'lonni joylash</button></div>`}`);
+}
+function openMessages(){
+  if(!requireLogin())return;
+  const mine=messages.filter(m=>m.userId===currentUser.id);
+  modal(`<h2>💬 Xabarlar</h2><div class="tabs"><button class="tab" onclick="openProfile()">Profil</button><button class="tab" onclick="openMyAds()">Mening e'lonlarim</button><button class="tab" onclick="showFavorites()">Saqlanganlar</button><button class="tab active">Xabarlar</button></div>
+  <div id="messagesList">${mine.length ? mine.map(m=>`<div class="message"><b>${m.to}</b><br>${m.text}<br><small>${m.date}</small></div>`).join("") : `<div class="empty">Hali xabar yo'q.</div>`}</div>
+  <form onsubmit="sendMessage(event)" style="display:flex;gap:8px;margin-top:16px"><input id="messageText" style="flex:1;padding:13px;border:1px solid var(--line);border-radius:12px" placeholder="Yangi xabar yozing..." required><button class="primary">Yuborish</button></form>`);
+}
+function sendMessage(e){
+  e.preventDefault(); if(!requireLogin())return;
+  const text=document.getElementById("messageText").value.trim();
+  messages.unshift({id:Date.now(),userId:currentUser.id,to:"NEVERA Support",text,date:"Hozirgina"});
+  saveAccounts(); openMessages();
+}
+const oldOpenSeller=openSeller;
+openSeller=function(){
+  if(!requireLogin()) return;
+  oldOpenSeller();
+}
+// Replace addProduct to assign owner
+const oldAddProduct=addProduct;
+addProduct=function(e){
+  if(!currentUser){openAuth();return;}
+  e.preventDefault();let f=new FormData(e.target);
+  state.products.unshift({id:Date.now(),title:f.get("title"),price:+f.get("price"),category:f.get("category"),location:f.get("location"),date:"Hozirgina",image:f.get("image"),ownerId:currentUser.id});
+  save();closeModal();renderProducts();openMyAds();
+}
+const oldOrder=order;
+order=function(id){
+  if(!requireLogin())return;
+  oldOrder(id);
+}
+
+init();
+</script>
+</body></html>
